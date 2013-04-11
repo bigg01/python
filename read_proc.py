@@ -11,9 +11,10 @@ __email__ = "me@oliver-guggenbuehl.com"
 __status__ = "Test"
 
 import re
+import os
 
 class readPROC(object):
-  def __init__(self, data):
+	def __init__(self, data):
 		self.FILE = ''
 		self.FILE = data
 		if self.FILE == 'CPU':
@@ -58,7 +59,9 @@ class readPROC(object):
 		if Committed_AS is not None:
 			if CommitLimit is not None:
 				if Committed_AS > CommitLimit:
-					print "To Much Memory Used"
+					self.printOUT('To Much Memory Used', 'nok')
+				else:
+					self.printOUT('Memory Usage ok', 'ok')
 				
 
 		# for line in f:
@@ -74,8 +77,13 @@ class readPROC(object):
 		self.MEMF(f)
 		f.close
 
-	def printOUT(self, ttt):
-
+	def printOUT(self, ttt, stat):
+		green = '[ \033[1;42mOK\033[1;m ]'
+		red = '[ \033[1;41mOK\033[1;m ]'
+		if stat == 'ok':
+			print (ttt + '\t'+ green)
+		if stat == 'nok':
+			print (ttt + '\t'+ red)
 
 
 try:     
@@ -85,7 +93,7 @@ try:
 	#cpu = ccc.readFS('33')
 	mem = ccc.readFS('MEM')
 	#print mem
-#print ('[ \033[1;42m' + mem +'\033[1;m ]') 
+	#print ('[ \033[1;42m' + mem +'\033[1;m ]') 
 
  	#return True 
 except RuntimeError:
@@ -93,3 +101,12 @@ except RuntimeError:
 	print RuntimeError 
 	#print ('port:' + '\t' + port + "\t" + 'IP: '+ ip + '\t'+ '[ \033[1;41mCLOSED\033[1;m ]') 
 	#return False
+
+
+# clock ticks per second... jiffies (HZ)
+JIFFIES_PER_SEC = os.sysconf('SC_CLK_TCK')
+print JIFFIES_PER_SEC
+
+# KiB
+PAGE_SIZE=os.sysconf('SC_PAGE_SIZE') / 1024
+print PAGE_SIZE
