@@ -65,6 +65,6 @@ def getxml(enc):
 
 systems = {}
 
-getxml('http://mpzhbencd03oa1/xmldata?item=all')
-getxml('http://mpzhbencd04oa1/xmldata?item=all')
+getxml('http://server1oa1/xmldata?item=all')
+getxml('http://server1oa1/xmldata?item=all')
 print systems
